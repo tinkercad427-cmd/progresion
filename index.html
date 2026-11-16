@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#101410">
+  <meta name="description" content="ProgresionPage: registra tus entrenamientos, analiza tu progreso y construye constancia.">
+  <title>ProgresionPage — Training OS</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+  <div class="app-shell">
+    <aside class="sidebar" id="sidebar">
+      <a class="brand" href="#" data-view="dashboard" aria-label="ProgresionPage inicio">
+        <span class="brand-mark">P<span>.</span></span>
+        <span class="brand-copy"><strong>PROGRESION</strong><small>TRAINING OS</small></span>
+      </a>
+      <div class="side-label">WORKSPACE</div>
+      <nav class="nav-list" aria-label="Navegación principal">
+        <button class="nav-link active" data-view="dashboard"><span class="nav-icon">⌂</span>Inicio</button>
+        <button class="nav-link" data-view="training"><span class="nav-icon">＋</span>Entrenamiento</button>
+        <button class="nav-link" data-view="routines"><span class="nav-icon">▤</span>Rutinas</button>
+        <button class="nav-link" data-view="exercises"><span class="nav-icon">◈</span>Ejercicios</button>
+        <button class="nav-link" data-view="progress"><span class="nav-icon">↗</span>Progreso</button>
+        <button class="nav-link" data-view="records"><span class="nav-icon">♜</span>Récords</button>
+        <button class="nav-link" data-view="calendar"><span class="nav-icon">▦</span>Calendario</button>
+        <button class="nav-link" data-view="body"><span class="nav-icon">◎</span>Seguimiento corporal</button>
+        <button class="nav-link" data-view="achievements"><span class="nav-icon">✧</span>Logros</button>
+        <button class="nav-link" data-view="assistant"><span class="nav-icon">✳</span>Asistente</button>
+      </nav>
+      <div class="sidebar-bottom">
+        <div class="sidebar-tip"><span class="tip-dot"></span><div><strong>La constancia gana.</strong><small>Un entrenamiento a la vez.</small></div></div>
+        <button class="nav-link" data-view="settings"><span class="nav-icon">⚙</span>Configuración</button>
+        <div class="profile-mini"><div class="avatar">A</div><div><strong>Mi espacio</strong><small>Perfil local</small></div><span class="online-dot"></span></div>
+      </div>
+    </aside>
+
+    <main class="main-area">
+      <header class="topbar">
+        <button class="mobile-menu icon-btn" id="mobileMenu" aria-label="Abrir menú">☰</button>
+        <div class="breadcrumb"><span>WORKSPACE</span><b>/</b><strong id="pageCrumb">Inicio</strong></div>
+        <div class="top-actions">
+          <span class="today-label" id="todayLabel"></span>
+          <button class="icon-btn" id="themeToggle" title="Cambiar tema" aria-label="Cambiar tema">☼</button>
+          <button class="top-avatar" title="Mi espacio">A</button>
+        </div>
+      </header>
+
+      <div class="content-wrap">
+        <section class="view active" id="view-dashboard">
+          <div class="hero-row">
+            <div><div class="eyebrow"><span class="live-dot"></span> TU PANEL DE CONTROL</div><h1>Construí tu <em>progreso.</em></h1><p class="muted">Cada repetición cuenta. Este es tu resumen de entrenamiento.</p></div>
+            <button class="btn btn-primary" data-go="training">＋ Registrar entrenamiento</button>
+          </div>
+          <div class="stat-grid" id="dashboardStats"></div>
+          <div class="dashboard-grid">
+            <article class="card chart-card">
+              <div class="card-heading"><div><span class="eyebrow">RENDIMIENTO</span><h2>Tu evolución</h2></div><select id="dashExercise" class="select-small"></select></div>
+              <canvas id="dashChart" class="chart" aria-label="Gráfico de evolución"></canvas>
+              <div class="chart-foot"><span><i class="legend-line"></i> 1RM estimado</span><span id="chartSummary" class="muted"></span></div>
+            </article>
+            <article class="card">
+              <div class="card-heading"><div><span class="eyebrow">ACTIVIDAD</span><h2>Esta semana</h2></div><span class="pill pill-green" id="weekCount">0 sesiones</span></div>
+              <div class="week-days" id="weekDays"></div>
+              <div class="weekly-total"><strong id="weekVolume">0 kg</strong><span class="muted">volumen esta semana</span></div>
+              <div class="divider"></div>
+              <div class="inline-stat"><span>Racha actual</span><strong id="streakValue">0 días</strong></div>
+            </article>
+            <article class="card recent-card">
+              <div class="card-heading"><div><span class="eyebrow">ÚLTIMA ACTIVIDAD</span><h2>Sesión reciente</h2></div><button class="text-btn" data-go="calendar">Ver calendario →</button></div>
+              <div id="recentSession" class="recent-content"></div>
+            </article>
+            <article class="card highlight-card">
+              <div class="highlight-symbol">✦</div><span class="eyebrow">TU OBJETIVO</span><h2>Superate, no te compares.</h2><p>Registrá tus series con honestidad y usá las tendencias para tomar mejores decisiones.</p><button class="btn btn-secondary" data-go="assistant">Ver análisis →</button>
+            </article>
+          </div>
+        </section>
+
+        <section class="view" id="view-training">
+          <div class="page-heading"><div><div class="eyebrow">TRACKER DE FUERZA</div><h1>Entrenamiento</h1><p class="muted">Registrá cada serie y compará tu rendimiento.</p></div><button class="btn btn-secondary" id="startTimerTop">◷ Temporizador</button></div>
+          <div class="two-col">
+            <article class="card form-card">
+              <div class="card-heading"><div><span class="eyebrow">NUEVO REGISTRO</span><h2 id="formTitle">Anotar una serie</h2></div><span class="pill">SERIE</span></div>
+              <form id="setForm">
+                <input type="hidden" id="editingId">
+                <div class="field"><label for="exercise">Ejercicio</label><select id="exercise" required></select></div>
+                <div class="add-exercise-row"><input id="newExercise" maxlength="40" placeholder="Crear ejercicio personalizado"><button type="button" class="btn btn-secondary" id="addExercise">Añadir</button></div>
+                <div class="field-grid">
+                  <div class="field"><label for="date">Fecha</label><input type="date" id="date" required></div>
+                  <div class="field"><label for="weight">Peso <small>kg</small></label><input type="number" id="weight" min="0" step="0.25" inputmode="decimal" placeholder="0" required></div>
+                  <div class="field"><label for="reps">Repeticiones</label><input type="number" id="reps" min="1" step="1" placeholder="8" required></div>
+                  <div class="field"><label for="rir">RIR <small>0–10</small></label><input type="number" id="rir" min="0" max="10" step="1" placeholder="—"></div>
+                  <div class="field"><label for="rest">Descanso <small>segundos</small></label><input type="number" id="rest" min="0" step="5" placeholder="90"></div>
+                  <div class="field"><label for="setType">Tipo de serie</label><select id="setType"><option value="Efectiva">Efectiva</option><option value="Calentamiento">Calentamiento</option><option value="Descendente">Descendente</option><option value="Al fallo">Al fallo</option></select></div>
+                </div>
+                <div class="field"><label for="note">Notas <small>opcional</small></label><input type="text" id="note" maxlength="120" placeholder="Técnica, sensaciones, agarre..."></div>
+                <div class="form-actions"><button class="btn btn-primary" type="submit" id="saveSet">Guardar serie <span>→</span></button><button class="btn btn-ghost hidden" type="button" id="cancelEdit">Cancelar edición</button></div>
+                <p class="form-status" id="formStatus" role="status"></p>
+              </form>
+              <div class="info-note"><span>ⓘ</span><p>El 1RM estimado usa la fórmula de Epley. Es una estimación orientativa, no una medición directa.</p></div>
+            </article>
+            <div class="stack">
+              <article class="card">
+                <div class="card-heading"><div><span class="eyebrow">REFERENCIA</span><h2>Última sesión</h2></div></div>
+                <div id="lastHint" class="hint-box">Elegí un ejercicio para consultar tu último registro.</div>
+              </article>
+              <article class="card timer-card">
+                <div class="card-heading"><div><span class="eyebrow">RECUPERACIÓN</span><h2>Descanso entre series</h2></div><span class="timer-icon">◷</span></div>
+                <div class="timer-display" id="timerDisplay">01:30</div>
+                <div class="timer-presets"><button data-seconds="30">30s</button><button data-seconds="60">60s</button><button class="selected" data-seconds="90">90s</button><button data-seconds="120">2m</button><button data-seconds="180">3m</button></div>
+                <div class="timer-controls"><button class="btn btn-primary" id="timerStart">Iniciar</button><button class="btn btn-secondary" id="timerReset">Reiniciar</button></div>
+                <div class="timer-custom"><input type="number" id="customSeconds" min="1" max="3600" placeholder="Segundos"><button class="text-btn" id="setCustomTimer">Aplicar</button></div>
+              </article>
+            </div>
+          </div>
+          <article class="card table-card"><div class="card-heading"><div><span class="eyebrow">HISTORIAL</span><h2>Series registradas</h2></div><div class="table-tools"><select id="setFilter" class="select-small"></select><span class="muted" id="setCount"></span></div></div><div class="table-wrap"><table id="setsTable"></table></div></article>
+        </section>
+
+        <section class="view" id="view-routines">
+          <div class="page-heading"><div><div class="eyebrow">PLANIFICACIÓN</div><h1>Tus rutinas</h1><p class="muted">Diseñá una estructura y usala como guía en el gimnasio.</p></div><button class="btn btn-primary" id="newRoutine">＋ Crear rutina</button></div>
+          <div id="routineList" class="routine-grid"></div>
+          <article class="card routine-editor hidden" id="routineEditor"><div class="card-heading"><div><span class="eyebrow">EDITOR</span><h2 id="routineEditorTitle">Nueva rutina</h2></div><button class="icon-btn" id="closeRoutine">×</button></div><form id="routineForm"><input type="hidden" id="routineId"><div class="field-grid"><div class="field"><label for="routineName">Nombre</label><input id="routineName" required maxlength="50" placeholder="Ej. Tren superior A"></div><div class="field"><label for="routineDay">Día / enfoque</label><input id="routineDay" maxlength="30" placeholder="Lunes · Pecho y tríceps"></div></div><div class="field"><label for="routineExercises">Ejercicios <small>uno por línea</small></label><textarea id="routineExercises" rows="5" placeholder="Press de banca&#10;Press inclinado&#10;Aperturas"></textarea></div><div class="form-actions"><button class="btn btn-primary">Guardar rutina</button></div></form></article>
+        </section>
+
+        <section class="view" id="view-exercises">
+          <div class="page-heading"><div><div class="eyebrow">BIBLIOTECA</div><h1>Ejercicios</h1><p class="muted">Organizá tus movimientos y consultá su historial.</p></div></div>
+          <article class="card"><div class="exercise-toolbar"><input id="exerciseSearch" placeholder="Buscar ejercicio..."><select id="muscleFilter" class="select-small"><option value="">Todos los grupos</option><option>Pecho</option><option>Espalda</option><option>Piernas</option><option>Hombros</option><option>Brazos</option><option>Abdomen</option><option>Otro</option></select></div><div id="exerciseLibrary" class="exercise-grid"></div></article>
+        </section>
+
+        <section class="view" id="view-progress">
+          <div class="page-heading"><div><div class="eyebrow">ANÁLISIS DE RENDIMIENTO</div><h1>Tu progreso</h1><p class="muted">Entendé cómo cambia tu fuerza a lo largo del tiempo.</p></div><button class="btn btn-secondary" id="exportCsv">↓ Exportar CSV</button></div>
+          <article class="card"><div class="card-heading"><div><span class="eyebrow">EVOLUCIÓN POR EJERCICIO</span><h2 id="progressTitle">Seleccioná un ejercicio</h2></div><div class="table-tools"><select id="progressExercise" class="select-small"></select><select id="metric" class="select-small"><option value="e1rm">1RM estimado</option><option value="maxW">Peso máximo</option><option value="volume">Volumen</option></select></div></div><canvas id="progressChart" class="chart large-chart"></canvas><div class="chart-foot"><span><i class="legend-line"></i> Evolución</span><span class="muted" id="progressInsight"></span></div></article>
+          <div class="stat-grid compact-stats" id="progressStats"></div>
+          <article class="card table-card"><div class="card-heading"><div><span class="eyebrow">DETALLE</span><h2>Sesiones del ejercicio</h2></div></div><div class="table-wrap"><table id="sessionsTable"></table></div></article>
+        </section>
+
+        <section class="view" id="view-records">
+          <div class="page-heading"><div><div class="eyebrow">PERSONAL BEST</div><h1>Récords personales</h1><p class="muted">Tus mejores marcas registradas, ejercicio por ejercicio.</p></div></div>
+          <div id="recordsGrid" class="record-grid"></div>
+        </section>
+
+        <section class="view" id="view-calendar">
+          <div class="page-heading"><div><div class="eyebrow">CONSISTENCIA</div><h1>Calendario</h1><p class="muted">Cada sesión suma. Revisá tu historial de actividad.</p></div><div class="calendar-controls"><button class="icon-btn" id="prevMonth">‹</button><strong id="monthTitle"></strong><button class="icon-btn" id="nextMonth">›</button></div></div>
+          <article class="card calendar-card"><div class="calendar-weekdays"><span>LUN</span><span>MAR</span><span>MIÉ</span><span>JUE</span><span>VIE</span><span>SÁB</span><span>DOM</span></div><div class="calendar-grid" id="calendarGrid"></div><div class="calendar-legend"><span><i class="legend-dot"></i> Entrenamiento registrado</span><span><i class="legend-dot today-dot"></i> Hoy</span></div></article>
+          <article class="card"><div class="card-heading"><div><span class="eyebrow">DÍA SELECCIONADO</span><h2 id="selectedDateTitle">Seleccioná un día</h2></div></div><div id="dayDetails" class="day-details muted">Elegí una fecha del calendario para ver el detalle.</div></article>
+        </section>
+
+        <section class="view" id="view-body">
+          <div class="page-heading"><div><div class="eyebrow">BODY TRACKING</div><h1>Seguimiento corporal</h1><p class="muted">Registrá medidas para observar tendencias, sin obsesionarte con un número.</p></div></div>
+          <div class="two-col">
+            <article class="card"><div class="card-heading"><div><span class="eyebrow">NUEVA MEDICIÓN</span><h2>Registrar medidas</h2></div></div><form id="bodyForm"><div class="field"><label for="bodyDate">Fecha</label><input type="date" id="bodyDate" required></div><div class="field-grid"><div class="field"><label for="bodyWeight">Peso corporal <small>kg</small></label><input type="number" id="bodyWeight" min="0" step="0.1" placeholder="—"></div><div class="field"><label for="bodyHeight">Altura <small>cm</small></label><input type="number" id="bodyHeight" min="0" step="0.1" placeholder="—"></div><div class="field"><label for="bodyWaist">Cintura <small>cm</small></label><input type="number" id="bodyWaist" min="0" step="0.1" placeholder="—"></div><div class="field"><label for="bodyChest">Pecho <small>cm</small></label><input type="number" id="bodyChest" min="0" step="0.1" placeholder="—"></div><div class="field"><label for="bodyArm">Brazo <small>cm</small></label><input type="number" id="bodyArm" min="0" step="0.1" placeholder="—"></div><div class="field"><label for="bodyLeg">Muslo <small>cm</small></label><input type="number" id="bodyLeg" min="0" step="0.1" placeholder="—"></div></div><div class="field"><label for="bodyNote">Notas</label><input id="bodyNote" maxlength="120" placeholder="Opcional"></div><button class="btn btn-primary">Guardar medición →</button><p class="form-status" id="bodyStatus"></p></form></article>
+            <article class="card"><div class="card-heading"><div><span class="eyebrow">ÚLTIMO REGISTRO</span><h2>Resumen corporal</h2></div></div><div id="bodySummary" class="body-summary"></div></article>
+          </div>
+          <article class="card table-card"><div class="card-heading"><div><span class="eyebrow">HISTORIAL</span><h2>Mediciones registradas</h2></div></div><div class="table-wrap"><table id="bodyTable"></table></div></article>
+        </section>
+
+        <section class="view" id="view-achievements">
+          <div class="page-heading"><div><div class="eyebrow">MILESTONES</div><h1>Logros</h1><p class="muted">Reconocé los hábitos y avances que vas construyendo.</p></div></div>
+          <div class="achievement-progress card"><div><span class="eyebrow">TU COLECCIÓN</span><h2 id="achievementCount">0 logros desbloqueados</h2><p class="muted">Seguí entrenando para desbloquear nuevos hitos.</p></div><div class="achievement-ring" id="achievementRing"><strong id="achievementPercent">0%</strong></div></div>
+          <div id="achievementGrid" class="achievement-grid"></div>
+        </section>
+
+        <section class="view" id="view-assistant">
+          <div class="page-heading"><div><div class="eyebrow">TRAINING INSIGHTS</div><h1>Asistente inteligente</h1><p class="muted">Un análisis local de tus registros para encontrar patrones y oportunidades.</p></div><span class="pill pill-green">ANÁLISIS LOCAL</span></div>
+          <article class="assistant-hero card"><div class="assistant-orb">✳</div><div><span class="eyebrow">PROGRESION INSIGHTS</span><h2>Tu progreso, con contexto.</h2><p>Revisá tus datos, detectá tendencias y recibí ideas para organizar tu próxima sesión.</p></div></article>
+          <div id="assistantInsights" class="insight-grid"></div>
+          <article class="card"><div class="card-heading"><div><span class="eyebrow">PREGUNTAS RÁPIDAS</span><h2>¿Qué querés analizar?</h2></div></div><div class="quick-prompts"><button data-prompt="progress">¿Estoy progresando?</button><button data-prompt="stalled">¿Qué ejercicio está estancado?</button><button data-prompt="volume">¿Cómo viene mi volumen?</button><button data-prompt="next">¿Qué debería revisar en mi próxima sesión?</button></div><div class="assistant-answer" id="assistantAnswer">Elegí una pregunta para generar un análisis a partir de tus registros.</div></article>
+          <p class="disclaimer">Este asistente utiliza reglas y cálculos locales sobre tus datos. No es una IA conectada a un modelo externo ni reemplaza el criterio de un entrenador o profesional de salud.</p>
+        </section>
+
+        <section class="view" id="view-settings">
+          <div class="page-heading"><div><div class="eyebrow">PREFERENCIAS</div><h1>Configuración</h1><p class="muted">Personalizá la aplicación y administrá tus datos.</p></div></div>
+          <div class="settings-grid">
+            <article class="card"><div class="card-heading"><div><span class="eyebrow">APARIENCIA</span><h2>Interfaz</h2></div></div><div class="setting-row"><div><strong>Modo oscuro</strong><small>Elegí el tema de la aplicación.</small></div><label class="switch"><input type="checkbox" id="darkMode" checked><span></span></label></div></article>
+            <article class="card"><div class="card-heading"><div><span class="eyebrow">TUS DATOS</span><h2>Copia de seguridad</h2></div></div><p class="muted small-copy">Descargá todos tus registros para guardarlos o importalos en otro navegador.</p><div class="settings-actions"><button class="btn btn-primary" id="backupExport">↓ Exportar respaldo</button><label class="btn btn-secondary file-label">↑ Importar respaldo<input type="file" id="backupImport" accept=".json,application/json" hidden></label></div><p class="form-status" id="backupStatus" role="status"></p></article>
+            <article class="card"><div class="card-heading"><div><span class="eyebrow">INFORMES</span><h2>Reporte de progreso</h2></div></div><p class="muted small-copy">Generá una versión imprimible y elegí “Guardar como PDF” en el diálogo de impresión.</p><button class="btn btn-secondary" id="pdfReport">Generar informe PDF ↗</button></article>
+            <article class="card danger-zone"><div class="card-heading"><div><span class="eyebrow">ZONA DE PELIGRO</span><h2>Restablecer datos</h2></div></div><p class="muted small-copy">Elimina registros, rutinas, mediciones y ejercicios personalizados de este navegador. Exportá un respaldo antes de continuar.</p><button class="btn btn-danger" id="resetAll">Restablecer aplicación</button></article>
+          </div>
+          <p class="footer-note">ProgresionPage · Datos guardados localmente en este navegador.</p>
+        </section>
+      </div>
+      <footer class="mobile-nav" id="mobileNav">
+        <button class="active" data-view="dashboard"><span>⌂</span>Inicio</button><button data-view="training"><span>＋</span>Entrenar</button><button data-view="progress"><span>↗</span>Progreso</button><button data-view="records"><span>♜</span>Récords</button><button data-view="settings"><span>⚙</span>Más</button>
+      </footer>
+    </main>
+  </div>
+  <div class="toast-region" id="toastRegion" aria-live="polite"></div>
+  <div class="modal-backdrop hidden" id="modalBackdrop"><div class="modal card" role="dialog" aria-modal="true" aria-labelledby="modalTitle"><div class="card-heading"><h2 id="modalTitle">Confirmar</h2><button class="icon-btn" id="modalClose">×</button></div><p id="modalText"></p><div class="modal-actions"><button class="btn btn-secondary" id="modalCancel">Cancelar</button><button class="btn btn-danger" id="modalConfirm">Confirmar</button></div></div></div>
+  <script src="js/app.js"></script>
+</body>
+</html>
